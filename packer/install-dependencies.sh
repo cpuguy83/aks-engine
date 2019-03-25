@@ -47,17 +47,16 @@ cat << EOF >> ${RELEASE_NOTES_FILEPATH}
   - zip
 EOF
 
+
+MOBY_VERSION="3.0.4"
+installMoby
+echo "  - moby v${MOBY_VERSION}" >> ${RELEASE_NOTES_FILEPATH}
+
 if [[ ${FEATURE_FLAGS} == *"docker-engine"* ]]; then
-    DOCKER_ENGINE_REPO="https://apt.dockerproject.org/repo"
-    installDockerEngine
     overrideDockerEngineStorageDriver
     echo "  - docker-engine v${DOCKER_ENGINE_VERSION}" >> ${RELEASE_NOTES_FILEPATH}
     installGPUDrivers
     echo "  - nvidia-docker2 nvidia-container-runtime" >> ${RELEASE_NOTES_FILEPATH}
-else
-    MOBY_VERSION="3.0.4"
-    installMoby
-    echo "  - moby v${MOBY_VERSION}" >> ${RELEASE_NOTES_FILEPATH}
 fi
 
 installClearContainersRuntime
